@@ -1,0 +1,15 @@
+{
+  "name": "node_task",
+  "version": "1.0.0",
+  "description": "challenge",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mikheil Ispiriani",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose-unique-validator": "^3.1.0"
+  }
+}
