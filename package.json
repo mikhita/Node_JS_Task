@@ -5,11 +5,20 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build:ui": "rm -rf build && cd ../frontend && npm run build && cp -r build ../backend",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mikheil Ispiriani",
   "license": "ISC",
   "dependencies": {
-    "mongoose-unique-validator": "^3.1.0"
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.10.3",
+    "mongoose-unique-validator": "^3.1.0",
+    "morgan": "^1.10.0"
   }
 }
