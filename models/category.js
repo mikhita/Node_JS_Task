@@ -1,12 +1,21 @@
 const mongoose = require('mongoose')
 
 const categorySchema = new mongoose.Schema({
-  name: String,
+  category_name: {
+    type: String,
+    required: true,
+    unique: true
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
-})
+  },
+  transaction: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Transaction'
+  }]
+});
+
 
 categorySchema.set('toJSON', {
   transform: (document, returnedObject) => {

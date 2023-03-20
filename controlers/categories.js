@@ -5,7 +5,9 @@ const middleware = require('../utils/middleware')
 
 categoriesRouter.get('/', async (request, response) => {
   const categories = await Category
-    .find({}).populate('user', { username: 1, name: 1 })
+    .find({})
+    .populate('user', { username: 1, name: 1 })
+    .populate('transaction', {description: 1, amount: 1, category: 1})
 
   response.json(categories)
 })

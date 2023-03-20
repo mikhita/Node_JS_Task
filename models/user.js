@@ -15,6 +15,12 @@ const userSchema = new mongoose.Schema({
       ref: 'Category'
     }
   ],
+  transactions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Transaction'
+    }
+  ]
 })
 
 userSchema.plugin(uniqueValidator)

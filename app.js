@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const categoriesRouter = require('./controlers/categories')
+const transactionsRouter = require('./controlers/transactions')
 const usersRouter = require('./controlers/users')
 const loginRouter = require('./controlers/login')
 const middleware = require('./utils/middleware')
@@ -31,6 +32,7 @@ app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
 app.use('/api/categories', categoriesRouter)
+app.use('/api/transactions', transactionsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
@@ -38,6 +40,7 @@ app.use('/api/login', loginRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 app.use('/api/categories', middleware.userExtractor, categoriesRouter)
+app.use('/api/transactions', middleware.userExtractor, transactionsRouter)
 app.use(morgan('tiny'))
 
 module.exports = app
