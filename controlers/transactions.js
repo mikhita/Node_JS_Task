@@ -8,11 +8,7 @@ transactionsRouter.get('/', async (request, response) => {
   try {
     const transactions = await Transaction.find({})
       .populate('user', 'username name')
-      .populate({
-        path: 'category',
-        select: 'name',
-        model: 'Category'
-      });
+      .populate('category', 'category_name');
 
     response.json(transactions);
   } catch (error) {
@@ -35,7 +31,7 @@ transactionsRouter.post('/', middleware.userExtractor, async (request, response)
   if (!categoryObject) {
     return response.status(404).json({ error: 'category not found' })
   }
-console.log(categoryObject)
+
   const transaction = new Transaction({
     description,
     amount,

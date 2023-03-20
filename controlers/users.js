@@ -23,7 +23,7 @@ usersRouter.post('/', async (request, response) => {
 usersRouter.get('/', async (request, response) => {
   const users = await User
     .find({})
-    .populate('categories', { name: 1 })
+    .populate('categories', { category_name: 1 })
     .populate('transactions', {amount: 1, description: 1})
 
   response.json(users)

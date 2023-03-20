@@ -6,7 +6,7 @@ const middleware = require('../utils/middleware')
 categoriesRouter.get('/', async (request, response) => {
   const categories = await Category
     .find({})
-    .populate('user', { username: 1, name: 1 })
+    .populate('user', { username: 1, category_name: 1 })
     .populate('transaction', {description: 1, amount: 1, category: 1})
 
   response.json(categories)
@@ -15,12 +15,12 @@ categoriesRouter.get('/', async (request, response) => {
 categoriesRouter.post('/', middleware.userExtractor, async (request, response) => {
   const user = request.user
   const body = request.body
-  if (!body.name) {
+  if (!body.category_name) {
     return response.status(400).json({ error: 'name is missing' })
   }
 
   const category = new Category({
-    name: body.name,
+    category_name: body.category_name,
     user: user._id
   })
 
