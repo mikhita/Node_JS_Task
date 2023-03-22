@@ -8,14 +8,22 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
   name: String,
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: String,
   passwordHash: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   categories: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category'
     }
   ],
-  transactions: [
+  transaction: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Transaction'

@@ -10,7 +10,7 @@ const categorySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  transaction: [{ 
+  transaction: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Transaction'
   }]

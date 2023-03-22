@@ -7,6 +7,7 @@ const categoriesRouter = require('./controlers/categories')
 const transactionsRouter = require('./controlers/transactions')
 const usersRouter = require('./controlers/users')
 const loginRouter = require('./controlers/login')
+const resetPasswordRouter = require('./controlers/reset_password')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -35,6 +36,9 @@ app.use('/api/categories', categoriesRouter)
 app.use('/api/transactions', transactionsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/reset-password', resetPasswordRouter);
+
+
 
 
 app.use(middleware.unknownEndpoint)

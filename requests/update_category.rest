@@ -1,7 +1,7 @@
-POST http://localhost:3003/api/categories
+PUT http://localhost:3003/api/categories/641af51f85474a468ef03f7c
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pa2hpdGEiLCJpZCI6IjY0MWFlNzQ4NTVmMDViM2YxOWQ5YmE4MSIsImlhdCI6MTY3OTQ4ODA2NX0.46GwGSXeAmjgWl8_r__iENDNFEZdhwcRRHl6sPih1Ow
 
 {
-    "category_name": "education"
+  "category_name": "Food"
 }

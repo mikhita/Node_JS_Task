@@ -4,13 +4,32 @@ const jwt = require('jsonwebtoken')
 const middleware = require('../utils/middleware')
 
 categoriesRouter.get('/', async (request, response) => {
-  const categories = await Category
-    .find({})
-    .populate('user', { username: 1, category_name: 1 })
-    .populate('transaction', {description: 1, amount: 1, category: 1})
+  try {
+    const categories = await Category.aggregate([
+      {
+        $lookup: {
+          from: 'transactions',
+          localField: '_id',
+          foreignField: 'category',
+          as: 'transactions'
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          category_name: 1,
+          user: 1,
+          transactions: 1
+        }
+      }
+    ]);
+    response.json(categories);
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: 'Server error' });
+  }
+});
 
-  response.json(categories)
-})
 
 categoriesRouter.post('/', middleware.userExtractor, async (request, response) => {
   const user = request.user
@@ -51,10 +70,10 @@ categoriesRouter.delete('/:id',middleware.userExtractor, async (request, respons
 })
 
 categoriesRouter.put('/:id', (request, response) => {
-  const { name } = request.body
+  const { category_name } = request.body
   Category.findByIdAndUpdate(
     request.params.id,
-    { name },
+    { category_name },
     {
       new: true,
       runValidators: true,

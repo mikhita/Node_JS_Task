@@ -8,8 +8,10 @@ transactionsRouter.get('/', async (request, response) => {
   try {
     const transactions = await Transaction.find({})
       .populate('user', 'username name')
-      .populate('category', 'category_name');
-
+      .populate({
+        path: 'category',
+        select: 'category_name'
+      });
     response.json(transactions);
   } catch (error) {
     console.error(error);
@@ -26,31 +28,35 @@ transactionsRouter.post('/', middleware.userExtractor, async (request, response)
     return response.status(400).json({ error: 'missing fields' })
   }
 
-  const categoryObject = await Category.findById(category)
+  const categoryObjects = await Category.find({ _id: { $in: category } })
 
-  if (!categoryObject) {
+  if (categoryObjects.length !== category.length) {
     return response.status(404).json({ error: 'category not found' })
   }
 
   const transaction = new Transaction({
     description,
     amount,
-    category: [categoryObject._id],
+    category: categoryObjects.map((c) => c._id),
     user: user._id
   })
 
   const savedTransaction = await transaction.save()
 
-  if (!user.transactions) {
-    user.transactions = [];
-  }
-  
+  // Update the categories with the new transaction
+  await Promise.all(categoryObjects.map((c) => Category.updateOne({ _id: c._id }, { $push: { transactions: transaction._id } })))
 
-  user.transactions = user.transactions.concat(savedTransaction._id)
+  if (!user.transaction) {
+    user.transaction = [];
+  }
+
+  user.transaction = user.transaction.concat(savedTransaction._id)
   await user.save()
 
   response.status(201).json(savedTransaction)
 })
+
+
 
 transactionsRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
