@@ -13,7 +13,11 @@ const categorySchema = new mongoose.Schema({
   transaction: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Transaction'
-  }]
+  }],
+  isDefault: {
+    type: Boolean,
+    default: false
+  }
 });
 
 
@@ -22,6 +26,7 @@ categorySchema.set('toJSON', {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v
+    delete returnedObject.passwordHash
   },
 })
 

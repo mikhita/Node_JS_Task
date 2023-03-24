@@ -1,2 +1,2 @@
-GET http://localhost:3003/api/categories
+GET http://localhost:3003/api/categories/default
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pa2hpdGEiLCJpZCI6IjY0MWM2MzdiMDY0OGM4Nzg1MzIxN2QxNiIsImlhdCI6MTY3OTYwNTgyM30.UXW-NDl7QHaJ3GR81Ph6drgo9_3RtQyuNo4mzUd_D7E

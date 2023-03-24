@@ -27,6 +27,7 @@ loginRouter.post('/', async (request, response) => {
     userForToken, 
     process.env.SECRET
   )
+  console.log(token)
 
   response
     .status(200)
