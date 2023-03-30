@@ -1,6 +1,19 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema, Document } from 'mongoose';
+import { ICategory } from './category';
+import { UserDoc } from './user';
 
-const transactionSchema = new mongoose.Schema({
+
+export interface ITransaction extends Document {
+  description: string;
+  amount: number;
+  date: Date;
+  type: 'expense' | 'income';
+  status: 'processing' | 'completed';
+  category: Schema.Types.ObjectId[] | ICategory[];
+  user: Schema.Types.ObjectId | UserDoc;
+}
+
+const transactionSchema: Schema = new mongoose.Schema({
   description: {
     type: String,
     required: true
@@ -43,7 +56,6 @@ transactionSchema.set('toJSON', {
   }
 });
 
-const Transaction = mongoose.model('Transaction', transactionSchema);
+const Transaction = mongoose.model<ITransaction>('Transaction', transactionSchema);
 
-module.exports = Transaction;
-
+export default Transaction;
